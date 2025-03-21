@@ -1,0 +1,30 @@
+import { test, expect } from "@playwright/test";
+
+test("Test Case 2", async ({ page }) => {
+    await page.goto("https://sqademosatp.net/watch/");
+    await page.getByLabel("Next").click();
+    await page.getByRole("link", { name: "Citizen Eco-Drive Silver Tone" }).first().click();
+    await page.waitForTimeout(1000);
+    await page.locator("#btn-cart").getByRole("button", { name: "Add to Basket" }).click();
+    await page.waitForTimeout(1000);
+    await page.locator(".qty > .qty-box > .bigger").click();
+    await page.waitForTimeout(1000);
+    await page.locator(".qty > .qty-box > .bigger").click();
+    await page.waitForTimeout(1000);
+    await expect(page.locator('input[name="cart_quantity\\[\\]"]')).toHaveValue("3");
+    await page.locator(".pop-up-close").click();
+    await page.locator("#cart-box").hover();
+    await page.locator("#cart-box").getByRole("link", { name: "Checkout" }).click();
+    await page.locator("#login-email_address").click();
+    await page.locator("#login-email_address").fill("Juana12345@hotmail.com");
+    await page.locator("#login-email_address").press("Tab");
+    await page.locator("#login-password").fill("JuanaJuana12345");
+    await page.getByRole("button", { name: "Log in" }).click();
+    await page.waitForTimeout(1000);
+    await page.getByLabel("£122.58 Total").check();
+    await page.waitForTimeout(1000);
+    await page.getByLabel("Cash on Delivery").check();
+    await page.waitForTimeout(1000);
+    await page.getByRole("button", { name: "Confirm and pay" }).click();
+    await expect(page.locator("#box-36757")).toContainText("We'll send you order status update by email");
+});
